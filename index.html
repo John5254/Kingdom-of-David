@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3b2656">
+    <meta name="description" content="Welcome to the Kingdom of David. A vision of restoration, transformation, and Building Heaven on Earth, founded on Acts 15:16.">
+    <meta property="og:title" content="Welcome to the Kingdom of David">
+    <meta property="og:description" content="A vision of restoration, transformation, and Building Heaven on Earth — founded on Acts 15:16.">
+    <meta property="og:type" content="website">
+    <title>Welcome to the Kingdom of David</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="kingdom-ocean.jpg">
+    <link rel="preload" as="image" href="kingdom-crown.png">
+
+    <style>
+        :root {
+            --black: #3b2656;
+            --night: #4a2f6b;
+            --deep: #33204b;
+            --purple: #552080;
+            --red: #841b30;
+            --gold: #e0bd78;
+            --gold-soft: #f1d79e;
+            --white: #fffafc;
+            --muted: #eee6f3;
+            --line: rgba(224,189,120,.35);
+            --ease: cubic-bezier(.22,.8,.24,1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: "DM Sans", sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+        ::selection { background: var(--gold); color: #170e18; }
+
+        .container { max-width: 1150px; margin: auto; }
+
+        /* ---------- SCROLL PROGRESS ---------- */
+        .progress {
+            position: fixed; top: 0; left: 0; height: 2px; width: 0;
+            z-index: 1100;
+            background: linear-gradient(90deg, var(--purple), var(--gold), var(--red));
+        }
+
+        /* ---------- NAVIGATION ---------- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 6%;
+            border-bottom: 1px solid transparent;
+            transition: padding .35s var(--ease), background .35s, border-color .35s;
+        }
+
+        .navbar.scrolled {
+            padding: 13px 6%;
+            background: rgba(52,32,78,.78);
+            border-bottom-color: rgba(255,255,255,.09);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .brand img { width: 43px; height: 43px; object-fit: contain; flex-shrink: 0; }
+
+        .brand-name {
+            font-family: "Cinzel", serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 1px; line-height: 1.5;
+        }
+        .brand-name span {
+            display: block; margin-top: 2px; color: var(--gold);
+            font-family: "DM Sans", sans-serif; font-size: 8px; letter-spacing: 2.5px;
+        }
+
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+
+        .nav-links a {
+            position: relative; color: #eee5f2; font-size: 11px;
+            letter-spacing: .6px; transition: color .25s;
+        }
+        .nav-links a:not(.nav-cta)::after {
+            content: ""; position: absolute; left: 0; bottom: -4px;
+            width: 100%; height: 1px; background: var(--gold);
+            transform: scaleX(0); transform-origin: right;
+            transition: transform .35s var(--ease);
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+        .nav-links a.active { color: var(--gold); }
+
+        .nav-links .nav-cta {
+            padding: 9px 14px; border: 1px solid rgba(224,189,120,.7); color: var(--gold);
+            transition: background .25s, color .25s;
+        }
+        .nav-links .nav-cta:hover { background: var(--gold); color: #170e18; }
+
+        .menu-toggle {
+            display: none; width: 42px; height: 42px; position: relative;
+            background: none; border: none; cursor: pointer;
+        }
+        .menu-toggle span {
+            position: absolute; left: 9px; width: 24px; height: 1.5px; background: var(--white);
+            transition: transform .35s var(--ease), opacity .25s, top .35s var(--ease);
+        }
+        .menu-toggle span:nth-child(1) { top: 14px; }
+        .menu-toggle span:nth-child(2) { top: 20px; }
+        .menu-toggle span:nth-child(3) { top: 26px; }
+        .menu-toggle.open span:nth-child(1) { top: 20px; transform: rotate(45deg); }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+
+        /* ---------- CINEMATIC HERO ---------- */
+        .hero {
+            position: relative; min-height: 100vh; min-height: 100svh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 130px 6% 95px; text-align: center;
+            overflow: hidden; isolation: isolate;
+        }
+
+        /* Living ocean: SVG with animated displacement on the water only */
+        .hero-ocean {
+            position: absolute; inset: -3%; z-index: -3;
+            width: 106%; height: 106%;
+            animation: oceanZoom 14s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .hero-ocean svg { width: 100%; height: 100%; display: block; }
+
+        #spray { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+
+        .hero::before {
+            content: ""; position: absolute; inset: 0; z-index: -2;
+            background:
+                linear-gradient(180deg, rgba(52,32,78,.55) 0%, rgba(52,32,78,.25) 28%, rgba(52,32,78,.6) 66%, #3b2656 100%),
+                linear-gradient(90deg, rgba(54,16,76,.45), transparent 50%, rgba(104,18,38,.3));
+        }
+        .hero::after {
+            content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            box-shadow: inset 0 0 160px rgba(0,0,0,.45);
+        }
+
+        .hero-content { max-width: 1050px; width: 100%; }
+        .hero-content > * { opacity: 0; animation: enter 1.1s var(--ease) forwards; }
+        .hero-content > *:nth-child(1) { animation-delay: .2s; }
+        .hero-content > *:nth-child(2) { animation-delay: .4s; }
+        .hero-content > *:nth-child(3) { animation-delay: .65s; }
+        .hero-content > *:nth-child(4) { animation-delay: .8s; }
+        .hero-content > *:nth-child(5) { animation-delay: 1s; }
+
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 12px; margin-bottom: 25px;
+            color: var(--gold); font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+        }
+        .eyebrow::before, .eyebrow::after { content: ""; width: 28px; height: 1px; background: var(--gold); }
+
+        .hero h1 {
+            font-family: "Cinzel", serif; font-size: clamp(35px, 6.5vw, 82px);
+            font-weight: 500; line-height: 1.25; letter-spacing: 1px;
+            text-shadow: 0 5px 35px rgba(0,0,0,.75);
+        }
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(100deg, #c99a4e 0%, var(--gold-soft) 35%, #fff3d6 50%, var(--gold-soft) 65%, #c99a4e 100%);
+            background-size: 220% auto;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            animation: shimmer 7s linear infinite;
+            filter: drop-shadow(0 4px 22px rgba(0,0,0,.6));
+            text-shadow: none;
+        }
+
+        .gold-line {
+            width: 95px; height: 2px; margin: 25px auto;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .hero-description {
+            max-width: 680px; margin: 0 auto; color: #f7f1fa;
+            font-size: clamp(15px, 2vw, 20px); font-weight: 300; line-height: 1.9;
+            text-shadow: 0 2px 15px rgba(0,0,0,.7);
+        }
+        .hero-description strong { color: white; font-weight: 600; }
+
+        .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+
+        .button {
+            position: relative; overflow: hidden;
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            min-height: 50px; padding: 13px 26px; cursor: pointer;
+            font-family: "DM Sans", sans-serif; font-size: 10px; font-weight: 700;
+            letter-spacing: 1.8px; text-transform: uppercase;
+            transition: transform .3s var(--ease), background .3s, border-color .3s, color .3s;
+        }
+        .button:hover { transform: translateY(-3px); }
+        .button-gold { color: #170e18; background: var(--gold); border: 1px solid var(--gold); }
+        .button-gold::after {
+            content: ""; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+            transform: skewX(-20deg); transition: left .7s var(--ease);
+        }
+        .button-gold:hover { background: var(--gold-soft); }
+        .button-gold:hover::after { left: 140%; }
+        .button-outline { color: white; background: rgba(52,32,78,.28); border: 1px solid rgba(255,255,255,.65); backdrop-filter: blur(6px); }
+        .button-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+        .scroll-hint {
+            position: absolute; bottom: 23px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,.78); font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+        }
+        .scroll-hint::after {
+            content: ""; display: block; width: 1px; height: 30px; margin: 9px auto 0;
+            background: linear-gradient(white, transparent);
+            animation: drip 2.2s ease-in-out infinite; transform-origin: top;
+        }
+
+        /* ---------- MARQUEE ---------- */
+        .marquee {
+            overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+            background: var(--deep); padding: 18px 0;
+        }
+        .marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+        .marquee-track span {
+            font-family: "Cinzel", serif; font-size: 13px; letter-spacing: 4px; color: var(--muted);
+            padding: 0 28px; white-space: nowrap; display: flex; align-items: center; gap: 56px;
+        }
+        .marquee-track span::after { content: "✦"; color: var(--gold); font-size: 10px; }
+
+        /* ---------- SHARED SECTION ---------- */
+        .section { position: relative; padding: 110px 7%; overflow: hidden; }
+
+        .section-label {
+            margin-bottom: 17px; color: var(--gold); font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; line-height: 1.9; text-transform: uppercase;
+        }
+        .section-title {
+            font-family: "Cinzel", serif; font-size: clamp(30px, 4.4vw, 52px);
+            font-weight: 500; line-height: 1.25; margin-bottom: 22px;
+        }
+        .section-title em { font-style: normal; color: var(--gold); }
+        .section-lead { color: var(--muted); font-size: 15px; line-height: 2; max-width: 640px; }
+        .center { text-align: center; }
+        .center .section-lead { margin: 0 auto; }
+
+        /* ---------- FOUNDATION ---------- */
+        .foundation { background: radial-gradient(ellipse at 0% 45%, rgba(85,32,128,.24), transparent 55%), var(--black); }
+
+        .foundation-inner {
+            max-width: 1150px; margin: auto; display: grid;
+            grid-template-columns: 1fr 1fr; align-items: center; gap: 65px;
+        }
+
+        .foundation-photo {
+            position: relative; min-height: 520px; overflow: hidden;
+            border: 1px solid rgba(224,189,120,.4); background: #4a2f6b;
+        }
+        .foundation-photo::before {
+            content: ""; position: absolute; inset: 14px; z-index: 3; pointer-events: none;
+            border: 1px solid rgba(224,189,120,.25);
+        }
+        .foundation-photo img {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; object-position: center 20%;
+            transition: transform 1.2s var(--ease);
+        }
+        .foundation-photo:hover img { transform: scale(1.05); }
+        .foundation-photo::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(180deg, transparent 50%, rgba(52,32,78,.75));
+        }
+        .photo-caption {
+            position: absolute; z-index: 2; bottom: 28px; left: 28px; color: white;
+            font-family: "Cinzel", serif; font-size: 12px; letter-spacing: 2px;
+        }
+        .photo-caption small {
+            display: block; font-family: "DM Sans", sans-serif; font-size: 9px;
+            letter-spacing: 3px; color: var(--gold); margin-bottom: 4px;
+        }
+
+        .scripture {
+            padding: 28px; border-left: 2px solid var(--gold);
+            background: linear-gradient(90deg, rgba(85,32,128,.22), rgba(85,32,128,.02));
+        }
+        .scripture blockquote {
+            color: #fff7ff; font-family: "Cinzel", serif;
+            font-size: clamp(17px, 2vw, 22px); line-height: 1.8;
+        }
+        .scripture cite {
+            display: block; margin-top: 17px; color: var(--gold);
+            font-family: "DM Sans", sans-serif; font-size: 10px; font-style: normal;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .foundation-copy > p { margin-top: 23px; color: var(--muted); font-size: 14px; line-height: 2; }
+
+        /* ---------- STATS ---------- */
+        .stats { background: var(--deep); padding: 70px 7%; border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+        .stats-grid { max-width: 1150px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+        .stat { text-align: center; padding: 10px 20px; border-right: 1px solid rgba(255,255,255,.07); }
+        .stat:last-child { border-right: none; }
+        .stat-number { font-family: "Cinzel", serif; font-size: clamp(34px, 4vw, 52px); color: var(--gold); line-height: 1.1; }
+        .stat-label { margin-top: 10px; color: var(--muted); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; }
+
+        /* ---------- PILLARS ---------- */
+        .pillars { background: radial-gradient(ellipse at 100% 0%, rgba(132,27,48,.18), transparent 55%), var(--black); }
+        .pillar-grid { max-width: 1150px; margin: 60px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pillar {
+            position: relative; padding: 44px 34px 40px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+            transition: transform .5s var(--ease), border-color .4s, background .4s;
+            overflow: hidden;
+        }
+        .pillar::before {
+            content: ""; position: absolute; inset: 0;
+            background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 0%), rgba(224,189,120,.12), transparent 45%);
+            opacity: 0; transition: opacity .4s;
+        }
+        .pillar:hover { transform: translateY(-8px); border-color: rgba(224,189,120,.45); }
+        .pillar:hover::before { opacity: 1; }
+        .pillar-num { font-family: "Cinzel", serif; font-size: 13px; color: var(--gold); letter-spacing: 3px; }
+        .pillar-icon {
+            width: 56px; height: 56px; margin: 26px 0 24px; display: grid; place-items: center;
+            border: 1px solid var(--line); color: var(--gold); transform: rotate(45deg);
+        }
+        .pillar-icon svg { transform: rotate(-45deg); width: 24px; height: 24px; }
+        .pillar h3 { font-family: "Cinzel", serif; font-size: 21px; font-weight: 500; margin-bottom: 14px; }
+        .pillar p { color: var(--muted); font-size: 14px; line-height: 1.95; }
+
+        .pillar { display: flex; flex-direction: column; align-items: flex-start; }
+        .pillar-link {
+            margin-top: auto; padding-top: 28px;
+            display: inline-flex; align-items: center; gap: 10px;
+            color: var(--gold); font-size: 10px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .pillar-link::after { content: "→"; transition: transform .3s var(--ease); }
+        .pillar:hover .pillar-link::after { transform: translateX(7px); }
+
+        /* ---------- VISION ---------- */
+        .vision { text-align: center; background: radial-gradient(ellipse at 50% 0%, rgba(85,32,128,.28), transparent 65%), var(--night); }
+        .vision-inner { max-width: 840px; margin: auto; }
+        .vision-statement { margin-top: 46px; padding: 36px 15px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; }
+        .vision-statement::before {
+            content: "✦"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--night); padding: 0 14px; color: var(--gold); font-size: 14px;
+        }
+        .vision-statement p { color: var(--gold); font-family: "Cinzel", serif; font-size: clamp(23px, 4vw, 39px); line-height: 1.6; }
+
+        /* ---------- TIMELINE ---------- */
+        .journey { background: var(--black); }
+        .timeline { max-width: 900px; margin: 70px auto 0; position: relative; }
+        .timeline::before {
+            content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px;
+            background: linear-gradient(transparent, var(--line) 10%, var(--line) 90%, transparent);
+        }
+        .timeline-fill {
+            position: absolute; left: 50%; top: 0; width: 1px; height: 0;
+            background: var(--gold); box-shadow: 0 0 12px var(--gold);
+        }
+        .step { position: relative; width: 50%; padding: 0 50px 60px; }
+        .step:nth-child(odd) { margin-left: 50%; }
+        .step:nth-child(even) { text-align: right; }
+        .step::before {
+            content: ""; position: absolute; top: 6px; width: 13px; height: 13px;
+            background: var(--black); border: 1px solid var(--gold); transform: rotate(45deg);
+        }
+        .step:nth-child(odd)::before { left: -7px; }
+        .step:nth-child(even)::before { right: -6px; }
+        .step-tag { color: var(--gold); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; }
+        .step h3 { font-family: "Cinzel", serif; font-size: 22px; font-weight: 500; margin: 8px 0 10px; }
+        .step p { color: var(--muted); font-size: 14px; line-height: 1.95; }
+
+        /* ---------- SCRIPTURE SLIDER ---------- */
+        .word { background: radial-gradient(ellipse at 50% 50%, rgba(85,32,128,.22), transparent 60%), var(--night); text-align: center; }
+        .slider { max-width: 860px; margin: 50px auto 0; position: relative; min-height: 240px; }
+        .slide {
+            position: absolute; inset: 0; opacity: 0; transform: translateY(16px);
+            transition: opacity .9s var(--ease), transform .9s var(--ease); pointer-events: none;
+        }
+        .slide.active { opacity: 1; transform: none; pointer-events: auto; position: relative; }
+        .slide blockquote { font-family: "Cinzel", serif; font-size: clamp(20px, 3vw, 32px); line-height: 1.65; }
+        .slide cite { display: block; margin-top: 22px; color: var(--gold); font-style: normal; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+        .slider-dots { display: flex; justify-content: center; gap: 12px; margin-top: 36px; }
+        .slider-dots button {
+            width: 28px; height: 2px; border: none; cursor: pointer;
+            background: rgba(255,255,255,.2); transition: background .3s, width .4s var(--ease);
+        }
+        .slider-dots button.active { background: var(--gold); width: 52px; }
+
+        /* ---------- PATHWAYS ---------- */
+        .pathways { background: var(--black); }
+        .path-grid { max-width: 1150px; margin: 60px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+        .path-card {
+            position: relative; min-height: 380px; padding: 46px; display: flex; flex-direction: column; justify-content: flex-end;
+            overflow: hidden; border: 1px solid rgba(255,255,255,.08); isolation: isolate;
+            transition: border-color .4s, transform .5s var(--ease);
+        }
+        .path-card::before {
+            content: ""; position: absolute; inset: 0; z-index: -1; transition: transform 1s var(--ease);
+        }
+        .path-card.wealth::before { background: radial-gradient(circle at 80% 10%, rgba(224,189,120,.35), transparent 50%), linear-gradient(160deg, #2a1a10, #4d2a48 70%); }
+        .path-card.prophets::before { background: radial-gradient(circle at 80% 10%, rgba(85,32,128,.6), transparent 55%), linear-gradient(160deg, #563a7a, #3b2656 70%); }
+        .path-card:hover { border-color: rgba(224,189,120,.5); transform: translateY(-6px); }
+        .path-card:hover::before { transform: scale(1.08); }
+        .path-card .big-letter {
+            position: absolute; top: 10px; right: 30px; font-family: "Cinzel", serif; font-size: 190px;
+            line-height: 1; color: rgba(255,255,255,.04); z-index: -1;
+        }
+        .path-card h3 { font-family: "Cinzel", serif; font-size: clamp(24px, 3vw, 32px); font-weight: 500; margin: 8px 0 14px; }
+        .path-card p { color: var(--muted); font-size: 14px; line-height: 1.95; max-width: 420px; }
+        .path-link {
+            margin-top: 26px; display: inline-flex; align-items: center; gap: 12px;
+            color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700;
+        }
+        .path-link::after { content: "→"; transition: transform .3s var(--ease); }
+        .path-card:hover .path-link::after { transform: translateX(8px); }
+
+        /* ---------- FAQ ---------- */
+        .faq { background: var(--night); }
+        .faq-list { max-width: 820px; margin: 50px auto 0; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,.09); }
+        .faq-q {
+            width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+            padding: 26px 0; background: none; border: none; color: var(--white); cursor: pointer; text-align: left;
+            font-family: "Cinzel", serif; font-size: clamp(15px, 2vw, 19px);
+        }
+        .faq-q .plus { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+        .faq-q .plus::before, .faq-q .plus::after {
+            content: ""; position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: var(--gold);
+            transition: transform .4s var(--ease);
+        }
+        .faq-q .plus::after { transform: rotate(90deg); }
+        .faq-item.open .plus::after { transform: rotate(0); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height .5s var(--ease); }
+        .faq-a p { color: var(--muted); font-size: 14px; line-height: 2; padding-bottom: 26px; }
+
+        /* ---------- GLORY / JOIN ---------- */
+        .glory { text-align: center; padding-bottom: 120px; background: radial-gradient(ellipse at 50% 100%, rgba(132,27,48,.28), transparent 65%), var(--black); }
+        .glory-inner { max-width: 760px; margin: auto; }
+        .glory p { color: var(--muted); font-size: 15px; line-height: 2; }
+
+        .join-form { display: flex; max-width: 520px; margin: 36px auto 0; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+        .join-form input {
+            flex: 1; min-width: 0; padding: 0 20px; background: none; border: none; color: var(--white);
+            font-family: "DM Sans", sans-serif; font-size: 14px; outline: none;
+        }
+        .join-form input::placeholder { color: #ddd2e6; }
+        .join-form:focus-within { border-color: var(--gold); }
+        .form-note { margin-top: 14px; font-size: 12px !important; min-height: 20px; color: var(--gold) !important; }
+
+        /* ---------- FOOTER ---------- */
+        footer { padding: 70px 7% 28px; background: var(--deep); border-top: 1px solid rgba(255,255,255,.08); }
+        .footer-top { max-width: 1150px; margin: auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; padding-bottom: 46px; border-bottom: 1px solid rgba(255,255,255,.07); }
+        .footer-top p { color: #ddd2e6; font-size: 13px; line-height: 1.9; margin-top: 16px; max-width: 340px; }
+        .footer-col h4 { font-family: "Cinzel", serif; font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+        .footer-col a { display: block; color: var(--muted); font-size: 13px; padding: 5px 0; transition: color .25s, transform .25s; }
+        .footer-col a:hover { color: var(--gold); transform: translateX(4px); }
+        .footer-inner { max-width: 1150px; margin: auto; padding-top: 26px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .footer-title { font-family: "Cinzel", serif; font-size: 11px; letter-spacing: 1.5px; }
+        .footer-note { color: #ddd2e6; font-size: 11px; }
+        .back-top { color: var(--gold); font-size: 11px; letter-spacing: 1px; }
+
+        /* ---------- SCROLL REVEAL ---------- */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+        .reveal.visible { opacity: 1; transform: none; }
+        .reveal-delay-1 { transition-delay: .12s; }
+        .reveal-delay-2 { transition-delay: .24s; }
+
+        /* ---------- KEYFRAMES ---------- */
+        @keyframes oceanZoom { from { transform: scale(1) translateY(0); } to { transform: scale(1.08) translateY(-1.5%); } }
+        @keyframes enter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        @keyframes shimmer { to { background-position: -220% center; } }
+        @keyframes drip { 0% { transform: scaleY(0); opacity: 1; } 60% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1); opacity: 0; } }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media (max-width: 900px) {
+            .navbar, .navbar.scrolled { padding: 13px 5%; background: rgba(52,32,78,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                flex-direction: column; align-items: stretch; gap: 0;
+                padding: 18px 6% 25px; background: rgba(52,32,78,.98);
+                border-bottom: 1px solid rgba(255,255,255,.1);
+                clip-path: inset(0 0 100% 0); visibility: hidden;
+                transition: clip-path .5s var(--ease), visibility .5s;
+            }
+            .nav-links.open { clip-path: inset(0 0 0 0); visibility: visible; }
+            .nav-links a { padding: 14px 0; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,.06); }
+            .nav-links a::after { display: none; }
+            .nav-links .nav-cta { margin-top: 14px; padding: 13px; text-align: center; }
+
+            .foundation-inner { grid-template-columns: 1fr; gap: 40px; }
+            .foundation-photo { min-height: 0; aspect-ratio: 4 / 5; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
+            .stat:nth-child(2) { border-right: none; }
+            .pillar-grid, .path-grid { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr 1fr; }
+            .footer-top > div:first-child { grid-column: 1 / -1; }
+            .footer-inner { flex-direction: column; text-align: center; }
+
+            .timeline::before, .timeline-fill { left: 6px; }
+            .step, .step:nth-child(odd) { width: 100%; margin-left: 0; padding: 0 0 50px 40px; text-align: left; }
+            .step:nth-child(even) { text-align: left; }
+            .step:nth-child(odd)::before, .step:nth-child(even)::before { left: 0; right: auto; }
+        }
+
+        @media (max-width: 480px) {
+            .brand img { width: 36px; height: 36px; }
+            .brand-name { font-size: 10px; }
+            .brand-name span { font-size: 7px; letter-spacing: 1.6px; }
+            .hero { padding: 120px 5% 90px; align-items: flex-end; }
+            .eyebrow { gap: 7px; font-size: 8px; letter-spacing: 2px; }
+            .eyebrow::before, .eyebrow::after { width: 15px; }
+            .hero h1 { font-size: clamp(30px, 8.3vw, 40px); letter-spacing: 0; line-height: 1.35; }
+            .hero-description { font-size: 14px; }
+            .hero-actions { flex-direction: column; align-items: center; margin-top: 27px; }
+            .hero-actions .button { width: 100%; max-width: 300px; }
+            .section { padding: 80px 6%; }
+            .scripture { padding: 20px; }
+            .scripture blockquote { font-size: 17px; }
+            .pillar, .path-card { padding: 34px 26px; }
+            .path-card { min-height: 320px; }
+            .join-form { flex-direction: column; }
+            .join-form input { padding: 16px 18px; }
+            .footer-top { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important; transition-duration: .01ms !important;
+            }
+            .reveal, .hero-content > * { opacity: 1; transform: none; }
+        }
+
+        /* ---------- PREMIUM POLISH ---------- */
+        .hero-crown { position: relative; margin: 20px auto 2px; width: clamp(210px, 25vw, 330px); display: grid; place-items: center; animation: crownFloat 5.5s ease-in-out infinite; }
+        .crown-glyph { display: block; width: 100%; height: auto; filter: drop-shadow(0 0 28px rgba(241,215,158,.55)) drop-shadow(0 0 10px rgba(255,243,214,.45)) drop-shadow(0 16px 28px rgba(0,0,0,.72)); }
+        .crown-halo { position: absolute; inset: -14% -6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(241,215,158,.34), rgba(224,189,120,.13) 46%, transparent 76%); filter: blur(7px); animation: crownHalo 4.6s ease-in-out infinite; }
+        .crown-sparkle { position: absolute; color: var(--gold-soft); font-size: 13px; line-height: 1; text-shadow: 0 0 12px rgba(241,215,158,.95); animation: twinkle 3.2s ease-in-out infinite; }
+        .crown-sparkle.s1 { top: 12%; left: 8%; }
+        .crown-sparkle.s2 { top: 26%; right: 5%; animation-delay: 1.05s; }
+        .crown-sparkle.s3 { bottom: 16%; left: 19%; animation-delay: 2.1s; }
+        @keyframes crownFloat { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+        @keyframes crownHalo { 0%,100% { opacity: .68; transform: scale(.95) } 50% { opacity: 1; transform: scale(1.07) } }
+        @keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.4) } 50% { opacity: 1; transform: scale(1.2) } }
+        .hero-content > *:nth-child(6) { animation-delay: 1.15s; }
+        .hero-content > *:nth-child(3) { animation-delay: .55s; }
+        .hero h1 { letter-spacing: 3px; }
+        .hero h1 span { margin-top: 4px; }
+        .eyebrow { padding: 8px 18px; border: 1px solid var(--line); border-radius: 999px; background: rgba(52,32,78,.35); backdrop-filter: blur(8px); }
+        .button { border-radius: 2px; }
+        .button-gold { background: linear-gradient(135deg, #f6dfa8, var(--gold) 45%, #c99a4e); box-shadow: 0 10px 30px -8px rgba(224,189,120,.65); }
+        .button-gold:hover { box-shadow: 0 16px 40px -8px rgba(224,189,120,.85); }
+        body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1200; opacity: .06; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+        .section-title { letter-spacing: .5px; }
+        .section-title em { background: linear-gradient(100deg, #c99a4e, var(--gold-soft), #fff3d6, var(--gold-soft), #c99a4e); background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 7s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .hero-crown, .crown-halo, .crown-sparkle { animation: none; } .crown-sparkle { opacity: .8; } }
+        @media (min-width: 900px) and (max-height: 920px) {
+            .hero { padding-top: 96px; padding-bottom: 72px; }
+            .hero h1 { font-size: clamp(34px, 5.2vw, 66px); }
+            .hero-crown { margin-top: 12px; width: clamp(170px, 19vw, 250px); }
+            .gold-line { margin: 17px auto; }
+            .hero-description { line-height: 1.72; }
+            .hero-actions { margin-top: 25px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress" id="progress"></div>
+
+    <!-- NAVIGATION -->
+    <header class="navbar" id="navbar">
+        <a href="#home" class="brand" aria-label="Kingdom of David home">
+            <img src="kingship-logo.jpg" alt="Kingdom of David emblem" onerror="this.remove()">
+            <div class="brand-name">
+                KINGDOM OF DAVID
+                <span>BUILDING HEAVEN ON EARTH</span>
+            </div>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navLinks">
+            <span></span><span></span><span></span>
+        </button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#vision">The Vision</a>
+            <a href="wealth.html" class="nav-cta">The Wealth</a>
+            <a href="strategy.html">The Plan</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+
+            <!-- Living ocean: the sea flows and breathes, the horizon stays still -->
+            <div class="hero-ocean" aria-hidden="true">
+                <svg viewBox="0 0 1152 1712" preserveAspectRatio="xMidYMin slice" id="oceanSvg">
+                    <defs>
+                        <filter id="waterFlow" x="-5%" y="-5%" width="110%" height="110%">
+                            <feTurbulence id="waterNoise" type="fractalNoise" baseFrequency="0.006 0.022" numOctaves="2" seed="7" result="noise"/>
+                            <feDisplacementMap id="waterDisp" in="SourceGraphic" in2="noise" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+                        </filter>
+
+                        <filter id="feather"><feGaussianBlur stdDeviation="14"/></filter>
+
+                        <!-- White = moving water, Black = stays still (sky + far horizon) -->
+                        <mask id="waterMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1152" height="1712">
+                            <rect width="1152" height="1712" fill="#fff"/>
+                            <g fill="#000" filter="url(#feather)">
+                                <!-- sky and the far horizon line stay still -->
+                                <rect x="0" y="0" width="1152" height="205"/>
+                            </g>
+                        </mask>
+                    </defs>
+
+                    <!-- Still base image -->
+                    <image href="kingdom-ocean.jpg" width="1152" height="1712"/>
+                    <!-- Moving water layer -->
+                    <g mask="url(#waterMask)">
+                        <image href="kingdom-ocean.jpg" width="1152" height="1712" filter="url(#waterFlow)"/>
+                    </g>
+                </svg>
+            </div>
+
+            <canvas id="spray" aria-hidden="true"></canvas>
+
+            <div class="hero-content">
+                <div class="eyebrow">Acts 15:16 · The Foundation</div>
+
+                <h1>
+                    WELCOME TO
+                    <span>THE KINGDOM OF DAVID</span>
+                </h1>
+
+                <div class="hero-crown-wrap" aria-hidden="true"><div class="hero-crown">
+                    <span class="crown-halo"></span>
+                    <img class="crown-glyph" src="kingdom-crown.png" alt="" width="1488" height="771">
+                    <span class="crown-sparkle s1">✦</span>
+                    <span class="crown-sparkle s2">✦</span>
+                    <span class="crown-sparkle s3">✦</span>
+                </div></div>
+
+                <div class="gold-line"></div>
+
+                <p class="hero-description">
+                    A vision of restoration, transformation, and a new age —
+                    <strong>Building Heaven on Earth</strong>, one restored life,
+                    one restored family and one restored nation at a time.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#foundation" class="button button-gold">ENTER THE KINGDOM</a>
+                    <a href="#vision" class="button button-outline">Our Vision</a>
+                </div>
+            </div>
+
+            <a href="#marquee" class="scroll-hint">Scroll</a>
+        </section>
+
+        <!-- MARQUEE -->
+        <div class="marquee" id="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Restoration</span><span>Transformation</span><span>Kingship</span><span>Heaven on Earth</span><span>The Kingdom of David</span><span>Dominion</span><span>A New Age</span>
+                <span>Restoration</span><span>Transformation</span><span>Kingship</span><span>Heaven on Earth</span><span>The Kingdom of David</span><span>Dominion</span><span>A New Age</span>
+            </div>
+        </div>
+
+        <!-- FOUNDATION -->
+        <section class="section foundation" id="foundation">
+            <div class="foundation-inner">
+                <div class="foundation-photo reveal">
+                    <img src="kingdom-ocean.jpg" alt="Sunlight breaking across the open ocean" loading="lazy">
+                    <div class="photo-caption"><small>THE MIGHTY WATERS</small>Before the Endless Sea</div>
+                </div>
+
+                <div class="foundation-copy">
+                    <div class="section-label reveal">The Foundation · Acts 15:16</div>
+                    <h2 class="section-title reveal">Restoring the <em>Kingdom</em> of David</h2>
+
+                    <div class="scripture reveal reveal-delay-1">
+                        <blockquote>
+                            “After this I will return, says the Lord, and restore the kingdom of David. I will rebuild its ruins and make it strong again.”
+                        </blockquote>
+                        <cite>Acts 15:16 · GNT — Good News Translation</cite>
+                    </div>
+
+                    <p class="reveal reveal-delay-2">
+                        Everything we build begins with this promise. What was fallen will be raised;
+                        what was ruined will be rebuilt. The Kingdom of David is a call to stand like a
+                        rock before the waves — unmoved, unafraid and fully committed to the restoration
+                        of God's order in every area of life.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <section class="stats" aria-label="Kingdom at a glance">
+            <div class="stats-grid">
+                <div class="stat reveal"><div class="stat-number" data-count="3">0</div><div class="stat-label">Pillars of Restoration</div></div>
+                <div class="stat reveal reveal-delay-1"><div class="stat-number" data-count="7">0</div><div class="stat-label">Spheres of Influence</div></div>
+                <div class="stat reveal reveal-delay-2"><div class="stat-number" data-count="12">0</div><div class="stat-label">Kingdom Principles</div></div>
+                <div class="stat reveal"><div class="stat-number">∞</div><div class="stat-label">Generations Impacted</div></div>
+            </div>
+        </section>
+
+        <!-- PILLARS -->
+        <section class="section pillars" id="pillars">
+            <div class="center">
+                <div class="section-label reveal">Three Pillars</div>
+                <h2 class="section-title reveal">The Pillars of the <em>Kingdom</em></h2>
+                <p class="section-lead reveal">A kingdom stands or falls on what holds it up. Ours stands on three: a vision that defines us, a wealth that funds us, and a plan that trains us.</p>
+            </div>
+
+            <div class="pillar-grid">
+                <article class="pillar reveal">
+                    <div class="pillar-num">I</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>The Vision</h3>
+                    <p>To restore the Kingdom of David and build Heaven on Earth — a people of worshippers and warriors, builders and kings, rising above the storm to build what will outlast them.</p>
+                    <a class="pillar-link" href="#vision">See the Vision</a>
+                </article>
+
+                <article class="pillar reveal reveal-delay-1">
+                    <div class="pillar-num">II</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M9 9.2h4.6a2.3 2.3 0 0 1 0 4.6H9.6"/></svg>
+                    </div>
+                    <h3>The Wealth</h3>
+                    <p>TAKO — the crypto token of the Kingdom. A new-age instrument of stewardship that funds the vision, blesses families and keeps wealth moving inside the body.</p>
+                    <a class="pillar-link" href="wealth.html">Explore TAKO</a>
+                </article>
+
+                <article class="pillar reveal reveal-delay-2">
+                    <div class="pillar-num">III</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 5.6A2.6 2.6 0 0 1 6.6 3H20v14.5H6.6A2.6 2.6 0 0 0 4 20.1V5.6z"/><path d="M20 17.5V21H6.6"/></svg>
+                    </div>
+                    <h3>The Plan</h3>
+                    <p>The School of the Prophets — the strategy behind the vision. Formation in the Word, in prophetic insight and in Kingdom strategy, so the work outlives the workers.</p>
+                    <a class="pillar-link" href="strategy.html">Enter the School</a>
+                </article>
+            </div>
+        </section>
+
+        <!-- VISION -->
+        <section class="section vision" id="vision">
+            <div class="vision-inner">
+                <div class="section-label reveal">The Vision</div>
+                <h2 class="section-title reveal">A Kingdom Without <em>End</em></h2>
+                <p class="section-lead reveal" style="margin:0 auto;">
+                    We envision a people who carry the heart of David — worshippers and warriors,
+                    builders and kings. A generation that rises above the storm, takes its place
+                    and builds what will outlast it.
+                </p>
+                <div class="vision-statement reveal">
+                    <p>“To restore the Kingdom of David and build Heaven on Earth.”</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNEY / TIMELINE -->
+        <section class="section journey" id="journey">
+            <div class="center">
+                <div class="section-label reveal">The Journey</div>
+                <h2 class="section-title reveal">From Ruins to <em>Reign</em></h2>
+                <p class="section-lead reveal">The path of restoration unfolds in seasons. Each one builds upon the last.</p>
+            </div>
+
+            <div class="timeline" id="timeline">
+                <div class="timeline-fill" id="timelineFill"></div>
+                <div class="step reveal"><div class="step-tag">Season One</div><h3>The Call</h3><p>Hearing the voice that says “arise.” A personal awakening to identity, purpose and the promise of Acts 15:16.</p></div>
+                <div class="step reveal"><div class="step-tag">Season Two</div><h3>The Foundation</h3><p>Laying stones of truth, character and discipline — learning the principles of the Kingdom through the School of the Prophets.</p></div>
+                <div class="step reveal"><div class="step-tag">Season Three</div><h3>The Building</h3><p>Raising homes, businesses and institutions on Kingdom values. Stewarding wealth through TAKO with wisdom and integrity.</p></div>
+                <div class="step reveal"><div class="step-tag">Season Four</div><h3>The New Age</h3><p>A restored people manifesting Heaven on Earth — influencing nations and leaving an inheritance for generations.</p></div>
+            </div>
+        </section>
+
+        <!-- SCRIPTURE SLIDER -->
+        <section class="section word" aria-label="Scriptures">
+            <div class="section-label reveal">The Word</div>
+            <div class="slider reveal" id="slider">
+                <div class="slide active">
+                    <blockquote>“Thy kingdom come. Thy will be done in earth, as it is in heaven.”</blockquote>
+                    <cite>Matthew 6:10</cite>
+                </div>
+                <div class="slide">
+                    <blockquote>“In that day will I raise up the tabernacle of David that is fallen, and close up the breaches thereof.”</blockquote>
+                    <cite>Amos 9:11</cite>
+                </div>
+                <div class="slide">
+                    <blockquote>“The LORD sitteth upon the flood; yea, the LORD sitteth King for ever.”</blockquote>
+                    <cite>Psalm 29:10</cite>
+                </div>
+                <div class="slide">
+                    <blockquote>“Of the increase of his government and peace there shall be no end, upon the throne of David.”</blockquote>
+                    <cite>Isaiah 9:7</cite>
+                </div>
+            </div>
+            <div class="slider-dots" id="sliderDots"></div>
+        </section>
+
+        <!-- PATHWAYS -->
+        <section class="section pathways" id="pathways">
+            <div class="center">
+                <div class="section-label reveal">Pathways</div>
+                <h2 class="section-title reveal">Enter the <em>Kingdom</em></h2>
+                <p class="section-lead reveal">Two doors. One purpose. Choose where your journey of restoration begins.</p>
+            </div>
+
+            <div class="path-grid">
+                <a href="wealth.html" class="path-card wealth reveal">
+                    <span class="big-letter">T</span>
+                    <div class="section-label" style="margin:0;">Stewardship</div>
+                    <h3>TAKO &amp; Wealth</h3>
+                    <p>Kingdom economics for a new age. Learn to build, multiply and steward resources that fund the vision and bless generations.</p>
+                    <span class="path-link">Explore Wealth</span>
+                </a>
+                <a href="strategy.html" class="path-card prophets reveal reveal-delay-1">
+                    <span class="big-letter">S</span>
+                    <div class="section-label" style="margin:0;">Training</div>
+                    <h3>School of the Prophets</h3>
+                    <p>A place of formation and revelation. Be trained in the Word, in prophetic insight and in strategy for Kingdom expansion.</p>
+                    <span class="path-link">Enter the School</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section faq" id="faq">
+            <div class="center">
+                <div class="section-label reveal">Questions</div>
+                <h2 class="section-title reveal">Frequently <em>Asked</em></h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <button class="faq-q" aria-expanded="false">What is the Kingdom of David?<span class="plus"></span></button>
+                    <div class="faq-a"><p>It is a vision and a movement founded on Acts 15:16 — the restoration of the fallen Kingdom of David — expressed through teaching, community and practical Kingdom building.</p></div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q" aria-expanded="false">What does “Building Heaven on Earth” mean?<span class="plus"></span></button>
+                    <div class="faq-a"><p>It means bringing the values, order and goodness of God's Kingdom into everyday life: our homes, workplaces, communities and nations.</p></div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q" aria-expanded="false">What is TAKO?<span class="plus"></span></button>
+                    <div class="faq-a"><p>TAKO is our wealth and stewardship pathway, focused on building and managing resources with wisdom to advance the vision. Visit the TAKO &amp; Wealth page to learn more.</p></div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-q" aria-expanded="false">How can I join the School of the Prophets?<span class="plus"></span></button>
+                    <div class="faq-a"><p>Head to the School of the Prophets page for details on upcoming sessions, or join our list below to be notified when enrolment opens.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GLORY / JOIN -->
+        <section class="section glory" id="glory">
+            <div class="glory-inner">
+                <div class="section-label reveal">A New Age</div>
+                <h2 class="section-title reveal">The Glory of the Latter House</h2>
+                <p class="reveal">
+                    “The glory of this latter house shall be greater than of the former.” — Haggai 2:9.
+                    The waves are rising and a new age is dawning. Take your place in the Kingdom.
+                </p>
+
+                <form class="join-form reveal" id="joinForm" novalidate>
+                    <input type="email" id="joinEmail" placeholder="Enter your email address" aria-label="Email address" required>
+                    <button type="submit" class="button button-gold">Join the Kingdom</button>
+                </form>
+                <p class="form-note" id="formNote" aria-live="polite"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-top">
+            <div>
+                <a href="#home" class="brand">
+                    <img src="kingship-logo.jpg" alt="Kingdom of David emblem" onerror="this.remove()">
+                    <div class="brand-name">KINGDOM OF DAVID<span>BUILDING HEAVEN ON EARTH</span></div>
+                </a>
+                <p>A vision of restoration, transformation and a new age, founded on Acts 15:16.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#foundation">The Foundation</a>
+                <a href="#pillars">The Pillars</a>
+                <a href="#vision">The Vision</a>
+                <a href="#journey">The Journey</a>
+            </div>
+            <div class="footer-col">
+                <h4>Pathways</h4>
+                <a href="wealth.html">TAKO &amp; Wealth</a>
+                <a href="strategy.html">School of the Prophets</a>
+                <a href="#faq">FAQ</a>
+                <a href="#glory">Join Us</a>
+            </div>
+        </div>
+        <div class="footer-inner">
+            <div class="footer-title">KINGDOM OF DAVID</div>
+            <div class="footer-note">© <span id="year"></span> Kingdom of David. All rights reserved.</div>
+            <a href="#home" class="back-top">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        "use strict";
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        /* ---------- Year ---------- */
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        /* ---------- Mobile menu ---------- */
+        var toggle = document.getElementById("menuToggle");
+        var links = document.getElementById("navLinks");
+        function closeMenu() {
+            links.classList.remove("open"); toggle.classList.remove("open");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigation menu");
+        }
+        toggle.addEventListener("click", function () {
+            var open = links.classList.toggle("open");
+            toggle.classList.toggle("open", open);
+            toggle.setAttribute("aria-expanded", String(open));
+            toggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+        });
+        links.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeMenu); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeMenu(); });
+
+        /* ---------- Navbar, progress bar, active link, timeline ---------- */
+        var navbar = document.getElementById("navbar");
+        var progress = document.getElementById("progress");
+        var sections = Array.prototype.slice.call(document.querySelectorAll("main section[id]"));
+        var navAnchors = links.querySelectorAll('a[href^="#"]');
+        var timeline = document.getElementById("timeline");
+        var fill = document.getElementById("timelineFill");
+
+        function onScroll() {
+            var y = window.scrollY;
+            var h = document.documentElement.scrollHeight - window.innerHeight;
+            navbar.classList.toggle("scrolled", y > 40);
+            progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
+
+            var current = "home";
+            sections.forEach(function (s) { if (s.offsetTop - 120 <= y) current = s.id; });
+            navAnchors.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + current); });
+
+            var r = timeline.getBoundingClientRect();
+            var pct = Math.min(Math.max((window.innerHeight * 0.65 - r.top) / r.height, 0), 1);
+            fill.style.height = (pct * 100) + "%";
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+
+        /* ---------- Scroll reveal ---------- */
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) { en.target.classList.add("visible"); io.unobserve(en.target); }
+            });
+        }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+        document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+        /* ---------- Counters ---------- */
+        var cio = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (!en.isIntersecting) return;
+                var el = en.target, target = +el.dataset.count, start = null;
+                function tick(t) {
+                    if (!start) start = t;
+                    var p = Math.min((t - start) / 1600, 1);
+                    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                cio.unobserve(el);
+            });
+        }, { threshold: 0.6 });
+        document.querySelectorAll("[data-count]").forEach(function (el) { cio.observe(el); });
+
+        /* ---------- Pillar spotlight ---------- */
+        document.querySelectorAll(".pillar").forEach(function (card) {
+            card.addEventListener("pointermove", function (e) {
+                var r = card.getBoundingClientRect();
+                card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+                card.style.setProperty("--my", (e.clientY - r.top) + "px");
+            });
+        });
+
+        /* ---------- Scripture slider ---------- */
+        var slides = document.querySelectorAll(".slide");
+        var dotsWrap = document.getElementById("sliderDots");
+        var index = 0, timer;
+        slides.forEach(function (_, i) {
+            var b = document.createElement("button");
+            b.setAttribute("aria-label", "Show scripture " + (i + 1));
+            if (i === 0) b.classList.add("active");
+            b.addEventListener("click", function () { go(i); restart(); });
+            dotsWrap.appendChild(b);
+        });
+        var dots = dotsWrap.querySelectorAll("button");
+        function go(i) {
+            slides[index].classList.remove("active"); dots[index].classList.remove("active");
+            index = i;
+            slides[index].classList.add("active"); dots[index].classList.add("active");
+        }
+        function restart() { clearInterval(timer); timer = setInterval(function () { go((index + 1) % slides.length); }, 6500); }
+        restart();
+
+        /* ---------- FAQ accordion ---------- */
+        document.querySelectorAll(".faq-item").forEach(function (item) {
+            var q = item.querySelector(".faq-q"), a = item.querySelector(".faq-a");
+            q.addEventListener("click", function () {
+                var open = item.classList.toggle("open");
+                q.setAttribute("aria-expanded", String(open));
+                a.style.maxHeight = open ? a.scrollHeight + "px" : "0";
+            });
+        });
+
+        /* ---------- Join form ---------- */
+        document.getElementById("joinForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            var input = document.getElementById("joinEmail");
+            var note = document.getElementById("formNote");
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim())) {
+                note.textContent = "Please enter a valid email address.";
+                return;
+            }
+            note.textContent = "Welcome to the Kingdom. We'll be in touch soon.";
+            input.value = "";
+        });
+
+        if (reduceMotion) return;
+
+        /* ---------- LIVING WATER: animate the turbulence so the waves flow ---------- */
+        var noise = document.getElementById("waterNoise");
+        var disp = document.getElementById("waterDisp");
+        var heroEl = document.getElementById("home");
+        var heroVisible = true;
+        new IntersectionObserver(function (en) { heroVisible = en[0].isIntersecting; }).observe(heroEl);
+
+        function flow(t) {
+            if (heroVisible && !document.hidden) {
+                var s = t / 1000;
+                var fx = 0.006 + Math.sin(s * 1.1) * 0.0025;
+                var fy = 0.022 + Math.cos(s * 0.85) * 0.009;
+                noise.setAttribute("baseFrequency", fx.toFixed(5) + " " + fy.toFixed(5));
+                disp.setAttribute("scale", (26 + Math.sin(s * 2.0) * 12).toFixed(2));
+            }
+            requestAnimationFrame(flow);
+        }
+        requestAnimationFrame(flow);
+
+        /* ---------- Sea spray particles ---------- */
+        var canvas = document.getElementById("spray");
+        var ctx = canvas.getContext("2d");
+        var particles = [], W, H, dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resize() {
+            W = heroEl.clientWidth; H = heroEl.clientHeight;
+            canvas.width = W * dpr; canvas.height = H * dpr;
+            canvas.style.width = W + "px"; canvas.style.height = H + "px";
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            var count = Math.round(Math.min(W, 1400) / 14);
+            particles = [];
+            for (var i = 0; i < count; i++) particles.push(spawn(true));
+        }
+        function spawn(initial) {
+            return {
+                x: Math.random() * W,
+                y: initial ? Math.random() * H : H * (0.45 + Math.random() * 0.5),
+                r: Math.random() * 1.8 + 0.3,
+                vx: (Math.random() - 0.3) * 0.35,
+                vy: -(Math.random() * 0.45 + 0.1),
+                a: 0, max: Math.random() * 0.55 + 0.15,
+                life: 0, ttl: 260 + Math.random() * 380
+            };
+        }
+        function draw() {
+            if (heroVisible && !document.hidden) {
+                ctx.clearRect(0, 0, W, H);
+                for (var i = 0; i < particles.length; i++) {
+                    var p = particles[i];
+                    p.life++; p.x += p.vx; p.y += p.vy;
+                    var k = p.life / p.ttl;
+                    p.a = p.max * Math.sin(Math.PI * Math.min(k, 1));
+                    if (k >= 1) { particles[i] = spawn(false); continue; }
+                    ctx.beginPath();
+                    ctx.fillStyle = "rgba(235,245,255," + p.a.toFixed(3) + ")";
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener("resize", resize);
+        resize();
+        requestAnimationFrame(draw);
+    })();
+    </script>
+</body>
+</html>
